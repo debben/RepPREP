@@ -3,7 +3,99 @@ from discovery import Discovery
 import sys
 import logging
 import serial
-import serial.rfc2217
+import serial.rfc2217 
+import time
+import threading
+import os
+
+class Redirector:
+    def __init__(self, serial_instance, socket, debug=None):
+        self.serial = serial_instance
+        self.socket = socket
+        self._write_lock = threading.Lock()
+        self.rfc2217 = serial.rfc2217.PortManager(
+            self.serial,
+            self,
+            logger = (debug and logging.getLogger('rfc2217.server'))
+            )
+        self.log = logging.getLogger('redirector')
+
+    def statusline_poller(self):
+        self.log.debug('status line poll thread started')
+        while self.alive:
+            time.sleep(1)
+            self.rfc2217.check_modem_lines()
+        self.log.debug('status line poll thread terminated')
+
+    def shortcut(self):
+        """connect the serial port to the TCP port by copying everything
+           from one side to the other"""
+        self.alive = True
+        self.thread_read = threading.Thread(target=self.reader)
+        self.thread_read.setDaemon(True)
+        self.thread_read.setName('serial->socket')
+        self.thread_read.start()
+        self.thread_poll = threading.Thread(target=self.statusline_poller)
+        self.thread_poll.setDaemon(True)
+        self.thread_poll.setName('status line poll')
+        self.thread_poll.start()
+        self.writer()
+
+    def reader(self):
+        """loop forever and copy serial->socket"""
+        self.log.debug('reader thread started')
+        while self.alive:
+            try:
+                data = self.serial.read(1)              # read one, blocking
+                n = self.serial.inWaiting()             # look if there is more
+                if n:
+                    data = data + self.serial.read(n)   # and get as much as possible
+                if data:
+                    # escape outgoing data when needed (Telnet IAC (0xff) character)
+                    data = serial.to_bytes(self.rfc2217.escape(data))
+                    self._write_lock.acquire()
+                    try:
+                        self.socket.sendall(data)       # send it over TCP
+                    finally:
+                        self._write_lock.release()
+            except socket.error, msg:
+                self.log.error('%s' % (msg,))
+                # probably got disconnected
+                break
+        self.alive = False
+        self.log.debug('reader thread terminated')
+
+    def write(self, data):
+        """thread safe socket write with no data escaping. used to send telnet stuff"""
+        self._write_lock.acquire()
+        try:
+            self.socket.sendall(data)
+        finally:
+            self._write_lock.release()
+
+    def writer(self):
+        """loop forever and copy socket->serial"""
+        while self.alive:
+            try:
+                data = self.socket.recv(1024)
+                if not data:
+                    break
+                self.serial.write(serial.to_bytes(self.rfc2217.filter(data)))
+            except socket.error, msg:
+                self.log.error('%s' % (msg,))
+                # probably got disconnected
+                break
+        self.stop()
+
+    def stop(self):
+        """Stop copying"""
+        self.log.debug('stopping')
+        if self.alive:
+            self.alive = False
+            self.thread_read.join()
+            self.thread_poll.join()
+
+
 
 #configure the network discovery listener
 listener = Discovery(5225)
@@ -76,7 +168,7 @@ while True:
         r = Redirector(
             ser,
             connection,
-            options.verbosity > 0
+            True
         )
         try:
             r.shortcut()
@@ -90,8 +182,13 @@ while True:
         # client)
         ser.applySettingsDict(settings)
     except KeyboardInterrupt:
+        print "got keyboard interupt. Breaking"
+	listener.keepAlive = False
         break
     except socket.error, msg:
         logging.error('%s' % (msg,))
+listener.keepAlive = False
+listener.join()
+logging.info('--- exit ---')
 
 logging.info('--- exit ---')

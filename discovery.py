@@ -28,11 +28,12 @@ class Discovery(threading.Thread):
 		self.reply = socket.socket(socket.AF_INET,socket.SOCK_STREAM)
 		self.driver = self.getDriver()
 		self.port = port
+                self.keepAlive = True
 
 	def run(self):
 		print "Listening for pings..."
 		self.listener.bind((HOST,self.port))
-		while 1:
+		while self.keepAlive:
 		    data, addr = self.listener.recvfrom(1024);
 		    if not data: continue
 		    
