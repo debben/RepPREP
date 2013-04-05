@@ -1,0 +1,18 @@
+<machine>
+	<name>
+	3G 5D (RPM) Cupcake (Gen3 XYZ, Mk5/6+Gen4 Extruder)
+	</name>
+	<geometry type="cartesian">
+		<axis id="x" length="100" maxfeedrate="5000" stepspermm="11.767463" endstops="min"/>
+		<axis id="y" length="100" maxfeedrate="5000" stepspermm="11.767463" endstops="min"/>
+		<axis id="z" length="100" maxfeedrate="150" stepspermm="320" endstops="min"/>
+		<axis id="a" length="100000" maxfeedrate="5000" scale="50.235478806907409"/>
+	</geometry>
+	<tools>
+		<tool name="Mk5/6/6+" type="extruder" material="abs" motor="true" floodcoolant="false" mistcoolant="false" fan="true" valve="false" collet="false" heater="true" heatedplatform="true" motor_steps="1600" default_rpm="1.98" stepper_axis="a"/>
+	</tools>
+	<clamps/>
+	<driver name="makerbot4ga"/>
+	<warmup></warmup>
+	<cooldown>(Turn off steppers after a build.) M18</cooldown>
+</machine>

@@ -1,0 +1,6 @@
+[submodule "pyserial"]
+	path = pyserial
+	url = https://github.com/makerbot/pyserial.git
+[submodule "s3g"]
+	path = s3g
+	url = https://github.com/makerbot/s3g.git

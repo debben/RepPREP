@@ -1,0 +1,32 @@
+<machine>
+	<name>
+	3G 5D (RPM) Cupcake (Gen3 XYZ, Mk5/6+Gen4 Extruder)
+	</name>
+	<geometry type="cartesian">
+		<axis endstops="min" id="x" length="100" maxfeedrate="5000" stepspermm="11.767463" />
+		<axis endstops="min" id="y" length="100" maxfeedrate="5000" stepspermm="11.767463" />
+		<axis endstops="min" id="z" length="100" maxfeedrate="150" stepspermm="320" />
+		<axis id="a" length="100000" maxfeedrate="5000" scale="50.235478806907409" />
+	</geometry>
+	<tools>
+		<tool collet="false" default_rpm="1.98" fan="true" floodcoolant="false" heatedplatform="true" heater="true" material="abs" mistcoolant="false" motor="true" motor_steps="1600" name="Mk5/6/6+" stepper_axis="a" type="extruder" valve="false" />
+	</tools>
+	<clamps />
+	<driver addr="92.168.1.112" name="makerbot4ga"<machine>
+	<name>
+	3G 5D (RPM) Cupcake (Gen3 XYZ, Mk5/6+Gen4 Extruder)
+	</name>
+	<geometry type="cartesian">
+		<axis endstops="min" id="x" length="100" maxfeedrate="5000" stepspermm="11.767463" />
+		<axis endstops="min" id="y" length="100" maxfeedrate="5000" stepspermm="11.767463" />
+		<axis endstops="min" id="z" length="100" maxfeedrate="150" stepspermm="320" />
+		<axis id="a" length="100000" maxfeedrate="5000" scale="50.235478806907409" />
+	</geometry>
+	<tools>
+		<tool collet="false" default_rpm="1.98" fan="true" floodcoolant="false" heatedplatform="true" heater="true" material="abs" mistcoolant="false" motor="true" motor_steps="1600" name="Mk5/6/6+" stepper_axis="a" type="extruder" valve="false" />
+	</tools>
+	<clamps />
+	<driver addr="92.168.1.112" name="makerbot4ga" port="5221" />
+	<warmup />
+	<cooldown>(Turn off steppers after a build.) M18</cooldown>
+</machine>
