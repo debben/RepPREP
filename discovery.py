@@ -2,6 +2,8 @@ from xml.etree import ElementTree as ET
 import socket
 import commands
 import threading
+import select
+
 
 HOST = '224.0.0.1'
 
@@ -32,14 +34,20 @@ class Discovery(threading.Thread):
 
 	def run(self):
 		print "Listening for pings..."
+		self.listener.setblocking(0) #dissable thread blocking
 		self.listener.bind((HOST,self.port))
+		
 		while self.keepAlive:
-		    data, addr = self.listener.recvfrom(1024);
-		    if not data: continue
+			ready = select.select([self.listener], [], [], 1)
+			if(ready[0]):
+				data, addr = self.listener.recvfrom(1024);
+			else:
+				continue
+			if not data: continue
 		    
-		    print "Ping recieved. Replying to ", addr[0]
-		    self.reply.connect((addr[0],self.port+1))
-		    self.reply.send(self.driver)
-		    self.reply.close()
+			print "Ping recieved. Replying to ", addr[0]
+			self.reply.connect((addr[0],self.port+1))
+			self.reply.send(self.driver)
+			self.reply.close()
 
 

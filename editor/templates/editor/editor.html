@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block header %}
+	{{block.super}}
+	<script src="{{STATIC_URL}}google-code-prettify/js-modules/prettify.js"></script>	
+	<link href="{{STATIC_URL}}google-code-prettify/styles/dessert.css" type="text/css" rel="stylesheet" />
+{% endblock header %}
+
+{% block content %}
+	<div class="row">
+		<div class=".col-md6">
+			
+		</div>
+		<div class=".col-md6">
+			<pre class="prettyprint linenums language-java">
+				This name = new Name();
+				name.sort();
+			</pre>
+		</div>
+	</div>
+{% endblock content%}

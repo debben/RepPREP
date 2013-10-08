@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block header %}
+	{{block.super}}
+	<script src="{{STATIC_URL}}google-code-prettify/js-modules/prettify.js"></script>	
+	<link href="{{STATIC_URL}}google-code-prettify/styles/dessert.css" type="text/css" rel="stylesheet" />
+{% endblock header %}
+
+
+{% block content %}
+    <h2>{{machine.name}}</h2>
+    {% include "machines/geometry_panel.html" %}   
+    {% include "machines/tools_panel.html" %}
+    <div class="panel pane-body">
+    	<div class="pannel-heading">
+    		Warm-up
+    	</div>
+    	<div class="panel-body">
+    		<pre class="prettyprint linenums lang-css">
+    			{{machine.warmup}}
+    		</pre>
+    	</div>
+    </div>
+    <div class="panel pane-body">
+    	<div class="pannel-heading">
+    		Cool-down
+    	</div>
+    	<div class="panel-body">
+    		<pre class="prettyprint linenums lang-css">
+    			{{machine.cooldown}}
+    		</pre>
+    	</div>
+    </div>    
+{% endblock %}

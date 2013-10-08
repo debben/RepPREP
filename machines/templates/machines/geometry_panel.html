@@ -1,0 +1,29 @@
+{% load dictionary_extras %}
+<div class="panel panel-primary">
+	<div class="pannel-heading">Geometry: <strong>{{machine.geometry}}</strong></div>
+	
+	<table class="table table-hover table-bordered">
+		<thead>
+			{% for field in Axis_fields%}
+				{% ifnotequal field.name "id" %}
+					{% ifnotequal field.name "machine" %}
+						<th>{{field.verbose_name|capfirst}}</th>
+					{% endifnotequal %}
+				{% endifnotequal %}
+			{% endfor%}    			
+		</thead>
+		<tbody>
+			{% for axis in axis_list %}
+			<tr>
+				{% for field in Axis_fields %}
+    				{% ifnotequal field.name "id" %}
+    					{% ifnotequal field.name "machine" %}    				
+			   					<td>{{axis|access:field.name}}</td>
+ 						{% endifnotequal %}
+					{% endifnotequal %}
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

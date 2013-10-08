@@ -1,0 +1,32 @@
+{
+  "name": "RepPREP",
+  "version": "0.0.0",
+  "homepage": "https://github.com/debben/RepPREP",
+  "authors": [
+    "Don Ebben <don.ebben@gmail.com>"
+  ],
+  "description": "A web-bassed implementation of ReplicatorG for 3d printer management.",
+  "main": "manage.py",
+  "keywords": [
+    "s3g",
+    "3d",
+    "printing",
+    "python"
+  ],
+  "license": "GPLv3",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.0.8",
+    "bootstrap": "~3.0.0",
+    "google-code-prettify": "~1.0.0",
+    "font-awesome": "~3.2.1",
+    "holderjs": "~2.1.0"
+  }
+}

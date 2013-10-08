@@ -1,0 +1,18 @@
+!!! 5
+html
+    head
+        title
+            block title
+                | My Website
+    body
+        header
+            h1 My Website
+            nav
+                a(href!='{% url home %}') Home
+                a(href!='{% url blog:index %}') Blog
+                a(href!='{% url about %}') About Me
+        #main(role='main')
+            block content
+                p Welcome to my website
+        footer
+            p All content copyright by me.

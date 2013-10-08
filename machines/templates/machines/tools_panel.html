@@ -1,0 +1,30 @@
+{% load dictionary_extras %}
+<div class="panel panel-primary">
+	<div class="pannel-heading">Toolheads:</div>
+	
+	<table class="pannel-body table table-hover table-bordered">
+		<thead>
+			{% for field in Tool_fields%}
+				{% ifnotequal field.name "id" %}
+					{% ifnotequal field.name "machine" %}
+						<th>{{field.verbose_name|capfirst}}</th>
+					{% endifnotequal %}
+				{% endifnotequal %}
+			{% endfor%}    			
+		</thead>
+		<tbody>
+			{% for tool in tool_list %}
+			<tr>
+				{% for field in Tool_fields %}
+    				{% ifnotequal field.name "id" %}
+    					{% ifnotequal field.name "machine" %}  
+                        {% comment %} TODO: lets make this format appropriately if the cell is a boolean type. {% endcomment %}  				
+			   					<td>{{tool|access:field.name}}</td>
+ 						{% endifnotequal %}
+					{% endifnotequal %}
+				{% endfor %}
+			</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</div>

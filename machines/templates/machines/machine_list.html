@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+    <h2>Machines</h2>
+    <ul>
+        {% for machine in object_list %}
+            <li><a href="/machines/{{machine.id}}">{{ machine.name }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

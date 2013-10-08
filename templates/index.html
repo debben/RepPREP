@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+
+{% block dashboard_nav_button %}
+	<li><a href="#" class="active">Dashboard</a></li>
+{% endblock %}				    
+
+{% block content%} 
+
+	<div class="row">
+		<div class="col-md-3">
+			<img data-src="holder.js/100%x100/text:Recent">
+		</div>
+		<div class="col-md-9">
+			<img data-src="holder.js/100%x100/text:Machines">
+		</div>
+	</div>
+	<div class="row">
+		<img data-src="holder.js/100%x200/text:Console">	
+	</div>
+
+{% endblock content %}
