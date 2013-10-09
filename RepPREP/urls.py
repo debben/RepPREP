@@ -11,8 +11,8 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	url(r'index', views.index, name="index"),
+	url(r'^objects/', include('editor.urls', namespace='object')),
 	url(r'^machines/', include('machines.urls', namespace='machines')),
     url(r'^polls/', include('polls.urls', namespace="polls")),
     url(r'^admin/', include(admin.site.urls)),
-    
 )

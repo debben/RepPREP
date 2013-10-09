@@ -2,20 +2,39 @@
 
 {% block header %}
 	{{block.super}}
-	<script src="{{STATIC_URL}}google-code-prettify/js-modules/prettify.js"></script>	
-	<link href="{{STATIC_URL}}google-code-prettify/styles/dessert.css" type="text/css" rel="stylesheet" />
+
+	{% comment %} scripts for formatting the gcode{% endcomment %}
+	<script src="{{STATIC_URL}}google-code-prettify/src/prettify.js"></script>	
+	<link href="{{STATIC_URL}}google-code-prettify/src/prettify.css" type="text/css" rel="stylesheet" />
+
+	{% comment %} scripts for displaying the 3d model {% endcomment %}
+	<script src="{{STATIC_URL}}thingiview.js/javascripts/Three.js"></script>
+    <script src="{{STATIC_URL}}thingiview.js/javascripts/plane.js"></script>
+    <script src="{{STATIC_URL}}thingiview.js/javascripts/thingiview.js"></script>
 {% endblock header %}
 
 {% block content %}
+	<<ul>
+	    <li><a href="#model" data-toggle="tab"></a></li>
+	    <li><a href="#gcode" data-toggle="tab"></a></li>
+	</ul>
 	<div class="row">
-		<div class=".col-md6">
-			
-		</div>
-		<div class=".col-md6">
-			<pre class="prettyprint linenums language-java">
-				This name = new Name();
-				name.sort();
+		<div id="viewer" class="col-md-6" style="width:50%;height:100%"></div>
+		<div class="col-md-6">
+			<pre class="prettyprint linenums:1 language-java">
+				{{ object.gcode }}
 			</pre>
 		</div>
 	</div>
+	<script>
+		prettyPrint();
+	    window.onload = function() {
+	       thingiurlbase = "{{STATIC_URL}}thingiview.js/javascripts";
+	       thingiview = new Thingiview("viewer");
+	       thingiview.setObjectColor('#C0D8F0');
+	       thingiview.initScene();
+	       thingiview.setRotation(false);
+	       thingiview.loadSTL('{{ object.model_url }}');
+	    }
+	</script>
 {% endblock content%}

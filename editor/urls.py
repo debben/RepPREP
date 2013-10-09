@@ -1,11 +1,7 @@
 from django.conf.urls import patterns, url
+from editor.views import ObjectList, ObjectEditor
 
-from editor import views
-
-urlpatterns = patterns('', 
-	url(
-		r'^about/$', views.about,
-		name='about'
-		),
+urlpatterns = patterns('',
+    url(r'^$', ObjectList.as_view()),
+    url(r'^(?P<pk>\d+)/$', ObjectEditor.as_view()),    
 )
-

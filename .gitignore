@@ -1,3 +1,6 @@
 bower_components/*
 polls/*
 *.pyc
+makerbot_driver
+serial
+snippet

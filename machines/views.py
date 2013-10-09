@@ -6,10 +6,6 @@ class MachineList(ListView):
     def get_queryset(self):
     	return Machine.objects.filter(authorized_users=self.request.user)
 
-
-
-
-
 class MachineDetail(DetailView):
 	model = Machine
 
