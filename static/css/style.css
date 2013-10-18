@@ -1,0 +1,14 @@
+#model-menu > .panel > .panel-collapse > .panel-body > *
+{
+    width:100%;
+
+    margin-top: 8px;
+}
+ 
+.axis-translate-control , .model-scale-control > input {
+    padding: 4px;
+}
+
+#model-menu {
+    height: 100%;
+}
